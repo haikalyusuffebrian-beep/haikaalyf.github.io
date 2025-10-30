@@ -4,298 +4,145 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Biodataku</title>
-
-  <!-- FONT AWESOME -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #000000 0%, #670cc8 100%);
-      color: #fff;
-      overflow-x: hidden;
-      position: relative;
-      min-height: 100vh;
     }
 
-    /* 🌟 Efek Bintang */
-    .stars {
-      position: fixed;
+    body {
+      height: 100vh;
+      overflow: hidden;
+      background: radial-gradient(circle at top, #3b0066, #1a0033);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    /* Bintang */
+    canvas {
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: -1;
-      overflow: hidden;
+      z-index: 0;
     }
 
-    .star {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.8;
-      animation: twinkle 3s infinite ease-in-out;
-    }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.5); }
-    }
-
-    /* Opening */
-    .opening {
-      position: fixed;
-      inset: 0;
-      background: transparent;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      z-index: 999;
-      transition: opacity 1s ease, visibility 1s ease;
-    }
-
-    .opening.hide { opacity: 0; visibility: hidden; }
-
-    .opening h1 {
-      font-size: 2.3em;
-      font-weight: 600;
-      margin-bottom: 15px;
-      animation: fadeInDown 1s ease forwards;
-    }
-
-    .opening p {
-      font-size: 1.1em;
-      opacity: 0.9;
-      margin-bottom: 25px;
-      animation: fadeIn 1.5s ease forwards;
-    }
-
-    .opening button {
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid #fff;
-      color: #fff;
-      padding: 10px 25px;
-      border-radius: 30px;
-      font-size: 1em;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .opening button:hover {
-      background: #fff;
-      color: #670cc8;
-      transform: translateY(-3px);
-    }
-
-    @keyframes fadeInDown {
-      0% { opacity: 0; transform: translateY(-20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
-    }
-
-    /* Biodata Container */
-    .container {
-      max-width: 900px;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      margin: 40px auto;
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 30px;
-      transition: transform 0.3s ease;
+    .card {
       position: relative;
-      z-index: 2;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 25px;
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      width: 320px;
+      backdrop-filter: blur(12px);
     }
 
-    .container:hover { transform: translateY(-5px); }
-
-    .sidebar { text-align: center; }
-
-    .photo {
-      width: 150px;
-      height: 150px;
+    .card img {
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
-      object-fit: cover;
-      border: 5px solid #fff;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      border: 4px solid white;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    p {
+      color: #d0c6e1;
       margin-bottom: 20px;
     }
 
-    .sidebar h1 { font-size: 2em; margin: 10px 0; color: #fff; }
-    .sidebar p { font-weight: 300; opacity: 0.9; }
-
-    .main-content { display: flex; flex-direction: column; gap: 20px; }
-
-    section {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-    }
-
-    h2 {
-      margin: 0;
-      font-size: 1.5em;
-      color: #fff;
-      border-bottom: 2px solid rgba(255, 255, 255, 0.5);
-      padding: 15px 20px;
-      cursor: pointer;
-      user-select: none;
-      background: rgba(255,255,255,0.1);
-      transition: background 0.3s;
-    }
-
-    h2:hover { background: rgba(255,255,255,0.2); }
-
-    .content {
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition: all 0.5s ease;
-      padding: 0 20px;
-    }
-
-    .content.show {
-      max-height: 400px;
-      opacity: 1;
-      padding: 15px 20px;
-    }
-
-    ul { list-style: none; padding: 0; margin: 0; }
-    li { margin-bottom: 10px; padding: 5px 0; border-left: 3px solid #667eea; padding-left: 10px; }
-    strong { color: #ffd86a; }
-
-    a.link {
-      color: #ffd86a;
+    .btn {
+      display: block;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
       text-decoration: none;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: transform 0.2s;
+      padding: 12px;
+      border-radius: 15px;
+      margin: 10px 0;
+      transition: all 0.3s ease;
     }
 
-    a.link:hover { text-decoration: underline; transform: translateX(3px); }
-
-    .fa-instagram, .fa-tiktok { color: #000000; }
-
-    @media (max-width: 768px) {
-      .container { grid-template-columns: 1fr; gap: 20px; }
-      .sidebar { order: -1; }
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
+  <canvas id="stars"></canvas>
 
-  <!-- 🌠 Latar Bintang -->
-  <div class="stars" id="stars"></div>
+  <div class="card">
+    <img src="fotomu.jpg" alt="Foto Profil">
+    <h1>BiodataKuu</h1>
+    <p>Biodata Singkat</p>
 
-  <!-- Opening -->
-  <div class="opening" id="opening">
-    <h1>Selamat Datang di BiodataKuu</h1>
-    <p>Kenali lebih dekat tentang diriku 🌟</p>
-    <button onclick="bukaBiodata()">Masuk</button>
-  </div>
-
-  <!-- Biodata -->
-  <div class="container" id="biodata" style="display:none;">
-    <div class="sidebar">
-      <img src="IMG_20250916_183801.jpg" alt="Foto Profil" class="photo">
-      <h1>BiodataKuu</h1>
-      <p>Biodata Singkat</p>
-    </div>
-
-    <div class="main-content">
-      <section>
-        <h2>Informasi Pribadi</h2>
-        <div class="content">
-          <ul>
-            <li><strong>Nama:</strong> Nur Haikal Yusuf Febrianto</li>
-            <li><strong>TTL:</strong> Tangerang | Februari-26-2009</li>
-            <li><strong>Agama:</strong> Islam</li>
-            <li><strong>Jenis kelamin:</strong> Laki-laki</li>
-            <li><strong>Email:</strong> haikalyusuffberian@gmail.com</li>
-          </ul>
-        </div>
-      </section>
-
-      <section>
-        <h2>Pendidikan</h2>
-        <div class="content">
-          <ul>
-            <li><strong>TK:</strong> TK Khoirunnisa Griya Asri (2014-2015)</li>
-            <li><strong>SD:</strong> SDIT ATTAQWA 02 (2015-2021)</li>
-            <li><strong>SMP:</strong> MTs ATTAQWA PUSAT PUTRA (2021-2024)</li>
-            <li><strong>SMK:</strong> SMK TARUNA BANGSA (2024-Saat ini)</li>
-          </ul>
-        </div>
-      </section>
-
-      <section>
-        <h2>Media Sosial</h2>
-        <div class="content">
-          <ul>
-            <li>
-              <a href="https://www.instagram.com/haikaaalyf?igsh=czA0dTJ1emw1Mjcz" class="link" target="_blank">
-                <i class="fab fa-instagram"></i> Instagram
-              </a>
-            </li>
-            <li>
-              <a href="https://www.tiktok.com/@haikaalyf?_t=ZS-90vHf6PB7Rf&_r=1" class="link" target="_blank">
-                <i class="fab fa-tiktok"></i> TikTok
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-    </div>
+    <a href="#" class="btn">Informasi Pribadi</a>
+    <a href="#" class="btn">Pendidikan</a>
+    <a href="#" class="btn">Media Sosial</a>
   </div>
 
   <script>
-    function bukaBiodata() {
-      const opening = document.getElementById('opening');
-      const biodata = document.getElementById('biodata');
-      opening.classList.add('hide');
-      setTimeout(() => {
-        opening.style.display = 'none';
-        biodata.style.display = 'grid';
-      }, 1000);
-    }
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
 
-    // Toggle buka tutup bagian
-    const sections = document.querySelectorAll("section");
-    sections.forEach(sec => {
-      const title = sec.querySelector("h2");
-      const content = sec.querySelector(".content");
-      title.addEventListener("click", () => {
-        content.classList.toggle("show");
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resize);
+    resize();
+
+    for (let i = 0; i < 100; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.2,
+        speed: Math.random() * 0.3 + 0.1,
       });
-    });
-
-    // 🌠 Buat bintang acak
-    const starsContainer = document.getElementById("stars");
-    for (let i = 0; i < 80; i++) {
-      const star = document.createElement("div");
-      star.classList.add("star");
-      star.style.top = Math.random() * 100 + "%";
-      star.style.left = Math.random() * 100 + "%";
-      star.style.animationDuration = 2 + Math.random() * 3 + "s";
-      star.style.opacity = 0.2 + Math.random() * 0.8;
-      starsContainer.appendChild(star);
     }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      for (let star of stars) {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function update() {
+      for (let star of stars) {
+        star.y += star.speed;
+        if (star.y > canvas.height) {
+          star.y = 0;
+          star.x = Math.random() * canvas.width;
+        }
+      }
+    }
+
+    function animate() {
+      draw();
+      update();
+      requestAnimationFrame(animate);
+    }
+
+    animate();
   </script>
 </body>
 </html>
