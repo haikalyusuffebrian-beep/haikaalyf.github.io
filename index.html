@@ -19,8 +19,9 @@
       min-height: 100vh;
       display: flex;
       justify-content: center;
-      align-items: center;
-      overflow: hidden;
+      align-items: flex-start; /* mulai dari atas */
+      overflow-x: hidden; /* sembunyikan scroll samping */
+      overflow-y: auto; /* biar bisa digulir ke bawah */
     }
 
     /* Opening Screen */
@@ -98,6 +99,7 @@
       display: grid;
       grid-template-columns: 1fr 2fr;
       gap: 30px;
+      margin: 40px auto;
       transition: transform 0.3s ease;
     }
 
@@ -178,6 +180,10 @@
     @media (max-width: 768px) {
       .container { grid-template-columns: 1fr; gap: 20px; }
       .sidebar { order: -1; }
+      body {
+        align-items: flex-start;
+        overflow-y: auto; /* aktifkan scroll di hp */
+      }
     }
   </style>
 </head>
@@ -256,12 +262,14 @@
     }
 
     // Toggle buka tutup bagian
-    const sections = document.querySelectorAll("section");
-    sections.forEach(sec => {
-      const title = sec.querySelector("h2");
-      const content = sec.querySelector(".content");
-      title.addEventListener("click", () => {
-        content.classList.toggle("show");
+    document.addEventListener("DOMContentLoaded", () => {
+      const sections = document.querySelectorAll("section");
+      sections.forEach(sec => {
+        const title = sec.querySelector("h2");
+        const content = sec.querySelector(".content");
+        title.addEventListener("click", () => {
+          content.classList.toggle("show");
+        });
       });
     });
   </script>
